@@ -1,0 +1,16 @@
+### table rules ###
+
+on_dif = 2
+off_dif = 2
+minute_dif = 900
+
+### not allowed pattern ###
+
+nap = 0,0,0
+nap = 123,123,123,123,123
+
+nap = 3,0,1
+nap = 2,1
+nap = 3,1
+nap = 3,12
+

@@ -1,0 +1,13 @@
+##work shift time##
+
+ws0 = off
+ws1 = 08:00 - 17:00
+ws2 = 16:00 - 23:00
+ws3 = 22:30 - 32:30
+
+##people per work shift##
+
+ppws1 = 3
+ppws2 = 3
+ppws3 = 3
+

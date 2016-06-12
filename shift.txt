@@ -1,0 +1,16 @@
+year = 2000
+month = Feb
+name=AA, ws1=30%, ws2=30%, d1=1, d2=1
+name=BB, ws1=40%, d20=3, d30=0
+name=CC
+name=DD
+name=EE
+name=FF
+name=GG
+name=HH
+name=II
+name=JJ
+name=KK
+name=LL
+name=MM
+name=NN
