@@ -48,9 +48,9 @@ class Checker
     sum = sum_check
     mem_count = @shift.table.count.to_f
 
-    result += -10*(line[:on] - (sum[0]/mem_count))
-    result += 10*(line[:off] - (sum[1]/mem_count))
-    result += -10*(line[:minute] - (sum[2]/mem_count))/60
+    result += -0.5*(line[:on] - (sum[0]/mem_count))
+    result += 0.5*(line[:off] - (sum[1]/mem_count))
+    result += -0.5*(line[:minute] - (sum[2]/mem_count))/60
     
     result.to_i
   end
@@ -71,12 +71,12 @@ class Checker
 
       target[date] = ws
       nap.count.times do |i|
-        result += -50 if target[i..i+(nap.count-1)].join =~ /[#{nap.join("][")}]/
+        result += -100 if target[i..i+(nap.count-1)].join =~ /[#{nap.join("][")}]/
       end
 
       target[date] = 0
       nap.count.times do |i|
-        result += 50 if target[i..i+(nap.count-1)].join =~ /[#{nap.join("][")}]/
+        result += 100 if target[i..i+(nap.count-1)].join =~ /[#{nap.join("][")}]/
       end
     end
     result
@@ -85,8 +85,9 @@ class Checker
   def each_line_check date, ws
     @shift.table.each do |person,val|
       @candid[person] += not_allowed(val[:shiftline].line, date, ws)
-      @candid[person] += -100 if (@plan["unit"].select {|ws,psns| psns.include?(person)}) != {}
-      @candid[person] += 200 if val[:condition].date[date+1] == ws
+      @candid[person] += -1000 if (@plan["unit"].select {|ws,psns| psns.include?(person)}) != {}
+      @candid[person] += 500 if val[:condition].date[date+1] == ws
+      @candid[person] += -500 if val[:condition].date[date+1] == 0
       @candid[person] += each_avg_check(val[:shiftline].sum)
     end
   end
