@@ -1,8 +1,8 @@
 class Condition 
-  attr_reader :percent, :date
+  attr_reader :pow, :percent, :date
 
-  def initialize ws, d
-    @percent = ws
+  def initialize pow, d
+    @pow = pow
     @date = d
   end
 end

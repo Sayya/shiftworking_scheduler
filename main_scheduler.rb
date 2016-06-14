@@ -2,7 +2,7 @@ require './ShiftTable.rb'
 require './Checker.rb'
 
 class Main_Scheduler
-  def process
+  def process_first
     @c = Checker.new
     @t = ShiftTable.new
     @c.set_shift @t
@@ -20,9 +20,11 @@ class Main_Scheduler
         @t.apply @c.planning_date(num)
       end
       trying += 1
-      print '-' 
+      print '-' if trying % 10 != 0 
+      print '=' if trying % 10 == 0 
       puts if trying % 100 == 0
     end
+    puts
   end
 
   def debug_conditions
@@ -35,6 +37,6 @@ class Main_Scheduler
 end
 
 m = Main_Scheduler.new
-m.process
-#m.process_for 300
+m.process_first
+m.process_for 50
 m.debug_conditions
