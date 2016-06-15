@@ -27,37 +27,51 @@ class Checker
     @shift = shift
   end
 
-  def sum_check
-    on_avg = @shift.table.inject(0) {|sum, person| sum += person[1][:shiftline].sum[:on]}
-    off_avg = @shift.table.inject(0) {|sum, person| sum += person[1][:shiftline].sum[:off]}
-    minute_avg = @shift.table.inject(0) {|sum, person| sum += person[1][:shiftline].sum[:minute]}
-    [on_avg,off_avg,minute_avg]
+  def total_check
+    on_sum = @shift.table.inject(0) {|sum, person| sum += person[1][:shiftline].sum[:on]}
+    off_sum = @shift.table.inject(0) {|sum, person| sum += person[1][:shiftline].sum[:off]}
+    minute_sum = @shift.table.inject(0) {|sum, person| sum += person[1][:shiftline].sum[:minute]}
+    [on_sum,off_sum,minute_sum]
   end
 
   def total_avg_check
-    sum = sum_check
-    mem_count = @shift.table.count.to_f
     flag = true
+		
+		on_minmax_dif = (@shift.table.map {|person, info| info[:shiftline].sum[:on]}).minmax.inject(0) {|min, max| max-min}
+		off_minmax_dif = (@shift.table.map {|person, info| info[:shiftline].sum[:off]}).minmax.inject(0) {|min, max| max-min}
+		minute_minmax_dif = (@shift.table.map {|person, info| info[:shiftline].sum[:minute]}).minmax.inject(0) {|min, max| max-min}
 
-    @shift.table.each do |person, val|
-      flag = false unless (val[:shiftline].sum[:on] - (sum[0]/mem_count)).abs <= @rule["on_dif"]
-      flag = false unless (val[:shiftline].sum[:off] - (sum[1]/mem_count)).abs <= @rule["off_dif"]
-      flag = false unless (val[:shiftline].sum[:minute] - (sum[2]/mem_count)).abs <= @rule["minute_dif"]
-    end
-    flag
+    flag = false unless on_minmax_dif <= @rule["on_dif"]
+    flag = false unless off_minmax_dif <= @rule["off_dif"]
+    flag = false unless minute_minmax_dif <= @rule["minute_dif"]
+    
+		[flag, on_minmax_dif, off_minmax_dif, minute_minmax_dif/60]
   end
 
-  def each_avg_check line
-    result = 0
-    sum = sum_check
+  def each_avg_check sum
+		result = 0
+    total = total_check
     mem_count = @shift.table.count.to_f
 
-    result += -10*(line[:on] - (sum[0]/mem_count))
-    result += 10*(line[:off] - (sum[1]/mem_count))
-    result += 1*(line[:minute] - (sum[2]/mem_count))/60
+    result += -10*(sum[:on] - (total[0]/mem_count))
+    result += 10*(sum[:off] - (total[1]/mem_count))
+    result += 1*(sum[:minute] - (total[2]/mem_count))/60
     
     result.to_i
   end
+
+	def percentage_check sum, ws, percent
+		result = 0
+		total = (sum[:ws].inject(0) {|total, ws| total + ws}).to_f
+		
+		unless percent == nil || total == 0
+			#puts "now:#{((sum[:ws][ws-1]/total*100).to_i)}%\tend:#{percent}" #debuging
+			result += 10 if sum[:ws][ws-1]/total*100 < percent - 5
+			result += -50 if sum[:ws][ws-1]/total*100 > percent + 5
+		end
+
+		result
+	end
 
   def recommended line, date, ws
     result = 0
@@ -148,6 +162,7 @@ class Checker
   def each_line_check date, ws
     @shift.table.each do |person,val|
       @candid[person][0] += each_avg_check(val[:shiftline].sum)
+			@candid[person][0] += percentage_check(val[:shiftline].sum, ws, val[:condition].percent[ws])
       @candid[person][0] += recommended(val[:shiftline].line, date, ws)
 
       nap_result = not_allowed(val[:shiftline].line, date, ws)

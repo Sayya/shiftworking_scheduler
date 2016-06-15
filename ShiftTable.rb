@@ -58,12 +58,14 @@ class ShiftTable
           name = item[1].chomp
         when "pow"
           pow = item[1].chomp
+        when /ws_per\d+/
+          ws_condit[/ws_per(\d+)/.match(item[0])[1].to_i] = item[1].chomp.to_i
         when /d\d+/
           d_condit[/d(\d+)/.match(item[0])[1].to_i] = item[1].chomp.to_i
         end
-
+	
         unless name == ""
-          @table[name] = {condition: Condition.new(pow, d_condit),
+          @table[name] = {condition: Condition.new(pow, ws_condit, d_condit),
                           shiftline: ShiftLine.new(@month.days_num, @ws.count)}
         end
       end

@@ -1,16 +1,16 @@
 year = 2016
 month = Jun
-name=Daiguj, pow=4, d26=0
-name=Kitaga, pow=4, d1=12, d2=0, d3=0
-name=Suzuki, pow=4
-name=Saito , pow=4, d16=2, d18=1, d22=1, d29=1
-name=Morish, pow=4, d1=3, d18=2
-name=Sakura, pow=3, d26=0
-name=Shigem, pow=3
-name=Hosoka, pow=3, d15=12, d16=0, d17=0
-name=Kanaza, pow=2, d1=12
-name=Nagaok, pow=2
-name=Tsumur, pow=2, d10=0, d16=1, d17=3
-name=Kodama, pow=1
-name=Toda  , pow=1
-name=Ishida, pow=1
+name=Daiguj, pow=4, ws_per3=50%, d26=0
+name=Kitaga, pow=4, ws_per3=50%, d1=12, d2=0, d3=0
+name=Suzuki, pow=4, ws_per3=50%
+name=Saito , pow=4, ws_per1=30%, ws_per3=30%, d16=2, d18=1, d22=1, d29=1
+name=Morish, pow=4, ws_per1=30%, ws_per3=30%, d1=3, d18=2
+name=Sakura, pow=3, ws_per1=30%, ws_per3=30%, d26=0
+name=Shigem, pow=3, ws_per1=30%, ws_per3=30%
+name=Hosoka, pow=3, ws_per1=30%, ws_per3=30%, d15=12, d16=0, d17=0
+name=Kanaza, pow=2, ws_per1=30%, ws_per3=30%, d1=12
+name=Nagaok, pow=2, ws_per1=100%, ws_per2=0%, ws_per3=0%
+name=Tsumur, pow=2, ws_per1=30%, ws_per3=30%, d10=0, d16=1, d17=3
+name=Kodama, pow=1, ws_per1=30%, ws_per3=30%
+name=Toda  , pow=1, ws_per1=30%, ws_per3=30%
+name=Ishida, pow=1, ws_per1=30%, ws_per3=30%

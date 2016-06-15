@@ -2,7 +2,7 @@
 
 on_dif = 2
 off_dif = 2
-minute_dif = 630
+minute_dif = 600
 
 ### not allowed pattern ###
 
@@ -13,7 +13,14 @@ nap = 3,0,1
 nap = 2,1
 nap = 3,12
 nap = 1,2,3
+nap = 1,2,2,3
 
 ### recommended pattern ###
 
 rcm = 0,0
+rcm = 1,1
+rcm = 1,1,1
+rcm = 2,2
+rcm = 2,2,2
+rcm = 3,3
+rcm = 3,3,3
