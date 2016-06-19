@@ -8,11 +8,15 @@ class Main_Scheduler
     c = Checker.new
     t = ShiftTable.new
     c.set_shift t
+
+    @better_plan = { table: t, checker: c }
+    debug_conditions
+
     t.month.days_num.times do |num|
       t.apply c.planning_date(num)
     end
 
-		@better_plan = { table: t, checker: c }
+    @better_plan = { table: t, checker: c }
   end
   
   def process_for num

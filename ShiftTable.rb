@@ -75,7 +75,7 @@ class ShiftTable
   def set_wish_to_table
     @table.each do |person, info|
       info[:condition].date.each do |date, wish|
-        info[:shiftline].line[date].shift = wish
+        info[:shiftline].line[date-1].shift = wish
       end
     end
   end

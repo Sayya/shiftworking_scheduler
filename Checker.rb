@@ -90,7 +90,7 @@ class Checker
       target[ptrn.count-1] = ws
       ptrn.count.times do |i|
         if target[i..i+(ptrn.count-1)].join =~ /[#{ptrn.join("][")}]/
-          result += 2
+          result += 5
           #puts "rcm:#{ptrn}\ttarget:#{target[i..i+(ptrnn.count-1)]}" #debuging
         end
       end
@@ -98,7 +98,7 @@ class Checker
       target[ptrn.count-1] = 0
       ptrn.count.times do |i|
         if target[i..i+(ptrn.count-1)].join =~ /[#{ptrn.join("][")}]/
-          result += -2 
+          result += -5 
           #puts "rcm:#{ptrn}\ttarget:#{target[i..i+(ptrn.count-1)]}\tZERO" #debuging
         end
       end

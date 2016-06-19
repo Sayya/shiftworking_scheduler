@@ -1,8 +1,8 @@
 ##work shift time##
 
 ws0 = off
-ws1 = 08:00 - 16:00
-ws2 = 16:00 - 22:00
+ws1 = 08:00 - 15:00
+ws2 = 15:00 - 22:00
 ws3 = 22:30 - 31:30
 
 ##people per work shift##
@@ -13,6 +13,6 @@ ppws3 = 3
 
 ### limit of power(experience) ###
 
-pow1 = 6
-pow2 = 6
-pow3 = 6
+pow1 = 7
+pow2 = 7
+pow3 = 7
