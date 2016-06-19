@@ -143,7 +143,7 @@ class Checker
     result = flag
     unless wish == nil
       if wish == 0
-        result = -1 if 0 == wish
+        result = -1 
       else
         if ws.to_s =~ /[#{wish}]/
           if Math.log10(wish).to_i+1 > ws

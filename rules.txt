@@ -15,6 +15,7 @@ nap = 2,1
 nap = 3,12
 nap = 1,2,3
 nap = 1,2,2,3
+nap = 3,3,3,3
 
 ### recommended pattern ###
 
