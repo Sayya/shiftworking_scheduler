@@ -1,9 +1,10 @@
 class Checker
   attr_reader :plan, :candid
-  attr_reader :rule, :shift
+  attr_reader :rule, :param,  :shift
 
   def initialize 
     set_rules IO.read './rules.txt'
+    set_param IO.read './param.txt'
     @plan = Hash.new
     @candid = Hash.new
   end
@@ -22,6 +23,13 @@ class Checker
       @rule["rcm"] << item[0].split(/\s*,\s*/).map(&:to_i)
     end
   end
+
+	def set_param param_txt
+		@param = Hash.new
+		param_txt.scan(/^(\w+)\s*=\s*([-\d]+)$/).each do |item|
+			@param[item[0]] = item[1].to_i
+		end
+	end
 
   def set_shift shift
     @shift = shift
@@ -53,9 +61,9 @@ class Checker
     total = total_check
     mem_count = @shift.table.count.to_f
 
-    result += -10*(sum[:on] - (total[0]/mem_count))
-    result += 10*(sum[:off] - (total[1]/mem_count))
-    result += 1*(sum[:minute] - (total[2]/mem_count))/60
+    result += @param["on_dif"]*(sum[:on] - (total[0]/mem_count))
+    result += @param["off_dif"]*(sum[:off] - (total[1]/mem_count))
+    result += @param["minute_dif"]*(sum[:minute] - (total[2]/mem_count))/60
     
     result.to_i
   end
@@ -66,8 +74,8 @@ class Checker
 		
 		unless percent == nil || total == 0
 			#puts "now:#{((sum[:ws][ws-1]/total*100).to_i)}%\tend:#{percent}" #debuging
-			result += 10 if sum[:ws][ws-1]/total*100 < percent - 5
-			result += -50 if sum[:ws][ws-1]/total*100 > percent + 5
+			result += @param["under_per"] if sum[:ws][ws-1]/total*100 < percent - @param["percent_dif"]
+			result += @param["over_per"] if sum[:ws][ws-1]/total*100 > percent + @param["percent_dif"]
 		end
 
 		result
@@ -90,7 +98,7 @@ class Checker
       target[ptrn.count-1] = ws
       ptrn.count.times do |i|
         if target[i..i+(ptrn.count-1)].join =~ /[#{ptrn.join("][")}]/
-          result += 5
+          result += @param["recommend"]
           #puts "rcm:#{ptrn}\ttarget:#{target[i..i+(ptrnn.count-1)]}" #debuging
         end
       end
@@ -98,7 +106,7 @@ class Checker
       target[ptrn.count-1] = 0
       ptrn.count.times do |i|
         if target[i..i+(ptrn.count-1)].join =~ /[#{ptrn.join("][")}]/
-          result += -5 
+          result += -1*@param["recommend"]
           #puts "rcm:#{ptrn}\ttarget:#{target[i..i+(ptrn.count-1)]}\tZERO" #debuging
         end
       end
@@ -131,7 +139,7 @@ class Checker
       target[nap.count-1] = 0
       nap.count.times do |i|
         if target[i..i+(nap.count-1)].join =~ /[#{nap.join("][")}]/
-          result[0] += 100 
+          result[0] += @param["zero_ban"] 
           #puts "nap:#{nap}\ttarget:#{target[i..i+(nap.count-1)]}\tZERO" #debuging
         end
       end

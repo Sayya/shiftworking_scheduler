@@ -1,0 +1,12 @@
+### paramaters on checking ###
+
+on_dif = -10
+off_dif = 10
+minute_dif = 1
+
+percent_dif = 5
+under_per = 10
+over_per = -50
+
+recommend = 5
+zero_ban = 100

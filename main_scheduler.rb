@@ -44,6 +44,7 @@ class Main_Scheduler
     p @better_plan[:checker].total_avg_check
     p @better_plan[:table].ws
     p @better_plan[:checker].rule
+    p @better_plan[:checker].param
     @better_plan[:table].table.each {|key, val| p val[:condition]}
   end
 end
