@@ -9,4 +9,4 @@ under_per = 10
 over_per = -50
 
 recommend = 5
-zero_ban = 100
+zero_ban = 1000
